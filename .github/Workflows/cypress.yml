@@ -1,7 +1,7 @@
-name: Cypress e2e Tests
+name: Cypress Tests
 on: [push]
 jobs:
-  tests:
+  cypress-run:
     runs-on: ubuntu-latest
     # Runs tests in parallel with matrix strategy https://on.cypress.io/parallelization
     # https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/run-job-variations
@@ -13,14 +13,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Run e2e tests
+      - name: Cypress run
         # Uses the official Cypress GitHub action https://github.com/cypress-io/github-action
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           # Starts web server for E2E tests - replace with your own server invocation
           # https://docs.cypress.io/app/continuous-integration/overview#Boot-your-server
-           install-Comand: npm install
-           wait-on: 'https://petlov.vercel.app' # Waits for above
+          start: npm start
+          wait-on: 'http://localhost:3000' # Waits for above
           # Records to Cypress Cloud 
           # https://docs.cypress.io/cloud/get-started/setup
           record: true
